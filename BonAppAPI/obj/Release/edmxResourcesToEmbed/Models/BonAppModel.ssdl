@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="bonappdbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="recipe">
+    <Key>
+      <PropertyRef Name="recipe_id" />
+    </Key>
+    <Property Name="recipe_id" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="image_url" Type="varchar" MaxLength="100" />
+    <Property Name="source_url" Type="varchar" MaxLength="100" />
+    <Property Name="f2f_url" Type="varchar" MaxLength="100" />
+    <Property Name="title" Type="varchar" MaxLength="100" />
+    <Property Name="publisher" Type="varchar" MaxLength="100" />
+    <Property Name="publisher_url" Type="varchar" MaxLength="100" />
+    <Property Name="social_rank" Type="double" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="userid" />
+    </Key>
+    <Property Name="userid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="userfavorite">
+    <Key>
+      <PropertyRef Name="userfavorite_id" />
+    </Key>
+    <Property Name="userfavorite_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userid_fav" Type="int" Nullable="false" />
+    <Property Name="recipeid_fav" Type="varchar" MaxLength="45" Nullable="false" />
+  </EntityType>
+  <Association Name="recipeid_fk">
+    <End Role="recipe" Type="Self.recipe" Multiplicity="1" />
+    <End Role="userfavorite" Type="Self.userfavorite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="recipe">
+        <PropertyRef Name="recipe_id" />
+      </Principal>
+      <Dependent Role="userfavorite">
+        <PropertyRef Name="recipeid_fav" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="userid_fk">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="userfavorite" Type="Self.userfavorite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="userfavorite">
+        <PropertyRef Name="userid_fav" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="bonappdbModelStoreContainer">
+    <EntitySet Name="recipe" EntityType="Self.recipe" Schema="bonappdb" store:Type="Tables" />
+    <EntitySet Name="user" EntityType="Self.user" Schema="bonappdb" store:Type="Tables" />
+    <EntitySet Name="userfavorite" EntityType="Self.userfavorite" Schema="bonappdb" store:Type="Tables" />
+    <AssociationSet Name="recipeid_fk" Association="Self.recipeid_fk">
+      <End Role="recipe" EntitySet="recipe" />
+      <End Role="userfavorite" EntitySet="userfavorite" />
+    </AssociationSet>
+    <AssociationSet Name="userid_fk" Association="Self.userid_fk">
+      <End Role="user" EntitySet="user" />
+      <End Role="userfavorite" EntitySet="userfavorite" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="bonappdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="recipe">
+    <Key>
+      <PropertyRef Name="recipe_id" />
+    </Key>
+    <Property Name="recipe_id" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="image_url" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="source_url" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="f2f_url" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="publisher" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="publisher_url" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="social_rank" Type="Double" />
+    <NavigationProperty Name="userfavorites" Relationship="Self.recipeid_fk" FromRole="recipe" ToRole="userfavorite" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="userid" />
+    </Key>
+    <Property Name="userid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="userfavorites" Relationship="Self.userid_fk" FromRole="user" ToRole="userfavorite" />
+  </EntityType>
+  <EntityType Name="userfavorite">
+    <Key>
+      <PropertyRef Name="userfavorite_id" />
+    </Key>
+    <Property Name="userfavorite_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userid_fav" Type="Int32" Nullable="false" />
+    <Property Name="recipeid_fav" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="recipe" Relationship="Self.recipeid_fk" FromRole="userfavorite" ToRole="recipe" />
+    <NavigationProperty Name="user" Relationship="Self.userid_fk" FromRole="userfavorite" ToRole="user" />
+  </EntityType>
+  <Association Name="recipeid_fk">
+    <End Role="recipe" Type="Self.recipe" Multiplicity="1" />
+    <End Role="userfavorite" Type="Self.userfavorite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="recipe">
+        <PropertyRef Name="recipe_id" />
+      </Principal>
+      <Dependent Role="userfavorite">
+        <PropertyRef Name="recipeid_fav" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="userid_fk">
+    <End Role="user" Type="Self.user" Multiplicity="1" />
+    <End Role="userfavorite" Type="Self.userfavorite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="userfavorite">
+        <PropertyRef Name="userid_fav" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="bonappdbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="recipes" EntityType="Self.recipe" />
+    <EntitySet Name="users" EntityType="Self.user" />
+    <EntitySet Name="userfavorites" EntityType="Self.userfavorite" />
+    <AssociationSet Name="recipeid_fk" Association="Self.recipeid_fk">
+      <End Role="recipe" EntitySet="recipes" />
+      <End Role="userfavorite" EntitySet="userfavorites" />
+    </AssociationSet>
+    <AssociationSet Name="userid_fk" Association="Self.userid_fk">
+      <End Role="user" EntitySet="users" />
+      <End Role="userfavorite" EntitySet="userfavorites" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

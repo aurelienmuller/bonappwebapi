@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="bonappdbModelStoreContainer" CdmEntityContainer="bonappdbEntities">
+    <EntitySetMapping Name="recipes">
+      <EntityTypeMapping TypeName="bonappdbModel.recipe">
+        <MappingFragment StoreEntitySet="recipe">
+          <ScalarProperty Name="recipe_id" ColumnName="recipe_id" />
+          <ScalarProperty Name="image_url" ColumnName="image_url" />
+          <ScalarProperty Name="source_url" ColumnName="source_url" />
+          <ScalarProperty Name="f2f_url" ColumnName="f2f_url" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="publisher" ColumnName="publisher" />
+          <ScalarProperty Name="publisher_url" ColumnName="publisher_url" />
+          <ScalarProperty Name="social_rank" ColumnName="social_rank" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="bonappdbModel.user">
+        <MappingFragment StoreEntitySet="user">
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="username" ColumnName="username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="userfavorites">
+      <EntityTypeMapping TypeName="bonappdbModel.userfavorite">
+        <MappingFragment StoreEntitySet="userfavorite">
+          <ScalarProperty Name="userfavorite_id" ColumnName="userfavorite_id" />
+          <ScalarProperty Name="userid_fav" ColumnName="userid_fav" />
+          <ScalarProperty Name="recipeid_fav" ColumnName="recipeid_fav" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

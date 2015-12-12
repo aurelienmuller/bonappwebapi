@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="BonAppDBEntities-Web.config Connection String" description="BonAppDBEntities Chaîne de connexion utilisée dans web.config par l’application pour accéder à la base de données." defaultValue="metadata=res://*/Models.BonAppModel.csdl|res://*/Models.BonAppModel.ssdl|res://*/Models.BonAppModel.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=eu-cdbr-azure-west-c.cloudapp.net;user id=bcf7e108a13117;password=a363b77a;database=BonAppDB&quot;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\Aurélien\\Documents\\Visual\ Studio\ 2015\\Projects\\WebAPI\\WebAPI\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='BonAppDBEntities']/@connectionString" />
-  </parameter>
-</parameters>
