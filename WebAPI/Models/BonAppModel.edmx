@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BonAppDBModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="mail" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="userfavorite">
+          <Key>
+            <PropertyRef Name="userid_fav" />
+            <PropertyRef Name="recipeid_fav" />
+          </Key>
+          <Property Name="userid_fav" Type="int" Nullable="false" />
+          <Property Name="recipeid_fav" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <Association Name="userid_fk">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="userfavorite" Type="Self.userfavorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="userfavorite">
+              <PropertyRef Name="userid_fav" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BonAppDBModelStoreContainer">
+          <EntitySet Name="user" EntityType="Self.user" Schema="bonappdb" store:Type="Tables" />
+          <EntitySet Name="userfavorite" EntityType="Self.userfavorite" Schema="bonappdb" store:Type="Tables" />
+          <AssociationSet Name="userid_fk" Association="Self.userid_fk">
+            <End Role="user" EntitySet="user" />
+            <End Role="userfavorite" EntitySet="userfavorite" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BonAppDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mail" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="userfavorites" Relationship="Self.userid_fk" FromRole="user" ToRole="userfavorite" />
+        </EntityType>
+        <EntityType Name="userfavorite">
+          <Key>
+            <PropertyRef Name="userid_fav" />
+            <PropertyRef Name="recipeid_fav" />
+          </Key>
+          <Property Name="userid_fav" Type="Int32" Nullable="false" />
+          <Property Name="recipeid_fav" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.userid_fk" FromRole="userfavorite" ToRole="user" />
+        </EntityType>
+        <Association Name="userid_fk">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="userfavorite" Type="Self.userfavorite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="userfavorite">
+              <PropertyRef Name="userid_fav" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BonAppDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="userfavorites" EntityType="Self.userfavorite" />
+          <AssociationSet Name="userid_fk" Association="Self.userid_fk">
+            <End Role="user" EntitySet="users" />
+            <End Role="userfavorite" EntitySet="userfavorites" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BonAppDBModelStoreContainer" CdmEntityContainer="BonAppDBEntities">
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="BonAppDBModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="mail" ColumnName="mail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userfavorites">
+            <EntityTypeMapping TypeName="BonAppDBModel.userfavorite">
+              <MappingFragment StoreEntitySet="userfavorite">
+                <ScalarProperty Name="userid_fav" ColumnName="userid_fav" />
+                <ScalarProperty Name="recipeid_fav" ColumnName="recipeid_fav" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
